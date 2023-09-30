@@ -43,13 +43,14 @@ const Home = () => {
         return {
           ...pre,
           data: res.data.data,
-          loading: true,
+          loading: false,
         };
       });
     } catch (error) {
       setAnimeData((pre) => {
         return {
           ...pre,
+          loading: false,
           error: error.message,
         };
       });
@@ -90,7 +91,7 @@ const Home = () => {
             setDetailToggle={setDetailToggle}
           />
         </Box>
-      ) : animeData.loading ? (
+      ) : !animeData.loading ? (
         <Box
           sx={{
             width: "100%",
@@ -178,9 +179,9 @@ function AnimeSkelaton() {
           gap: 3,
         }}
       >
-        {Array.from(12).map((val) => {
-          return <Skeleton variant="rectangular" width={250} height={300} />;
-        })}
+        {new Array(8).fill().map((val) => (
+          <Skeleton variant="rectangular" width={250} height={300} />
+        ))}
       </Box>
     </>
   );

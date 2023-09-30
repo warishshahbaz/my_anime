@@ -13,6 +13,10 @@ const Login = () => {
   });
   const [checkLocal, setCheckLocal] = useState(false);
   const [isValid, setIsValid] = useState(true);
+  const [loginStatus, setLoginStatus] = useState({
+    error: false,
+    errMsg: "",
+  });
   const navigate = useNavigate();
   function checkIsValid(name, value) {
     if (name === "confirmPassword") {
@@ -69,6 +73,11 @@ const Login = () => {
       );
       if (res) {
         navigate("/home");
+      } else {
+        setLoginStatus({
+          errMsg: "Login credential does not match",
+          error: true,
+        });
       }
     }
     setTimeout(() => {
@@ -132,7 +141,7 @@ const Login = () => {
           }}
         >
           <div>
-            {false && (
+            {loginStatus.error && (
               <Box
                 component="div"
                 sx={{
@@ -142,7 +151,7 @@ const Login = () => {
                 }}
               >
                 <Typography variant="h5" sx={{ fontSize: "15px" }} color="red">
-                  {/* {sentOtpStatus.error} */}
+                  {loginStatus.errMsg}
                 </Typography>
               </Box>
             )}
@@ -233,7 +242,6 @@ const Login = () => {
                 textAlign: "center",
                 color: "blue",
               }}
-              // href={partner_link}
             >
               Don’t have an account?
               <Box
