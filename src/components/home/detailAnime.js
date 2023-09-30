@@ -39,8 +39,8 @@ const DetailAnime = ({ data, setDetailToggle }) => {
 
   return (
     <>
-      <Box sx={{ position: "absolute", top: "70px", left: "12px" }}>
-        <Tooltip title="Back">
+      <Box sx={{ position: "absolute", top: "80px", left: "12px" }}>
+        <Tooltip title={<Box component={"span"}>Back</Box>}>
           <AiOutlineArrowLeft
             size={22}
             onClick={() => setDetailToggle(false)}

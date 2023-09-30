@@ -5,13 +5,12 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Redirect,
+  Navigate,
 } from "react-router-dom";
 import * as paths from "./config/route-path";
-import { lazy } from "react";
+
 import Home from "./pages/home";
 
-const HomePage = lazy(() => import("./pages/home"));
 function App() {
   return (
     <>
@@ -19,11 +18,15 @@ function App() {
         <Routes>
           <Route path={paths.SIGNUP} element={<Signup />} />
           <Route path={paths.LOGIN} index element={<Login />} />
-          <Route path={"/home"} index element={<Home />} />
-
-          {/* <PrivateRoute path={'./home'}>
-            <HomePage />
-          </PrivateRoute> */}
+          <Route
+            path={"/home"}
+            index
+            element={
+              <PrivateRoute isSignedIn={true}>
+                <Home />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </Router>
     </>
@@ -31,24 +34,11 @@ function App() {
 }
 
 //Auth Routers
-// const PrivateRoute = ({ children, ...rest }) => {
-//   return (
-//     <Route
-//       {...rest}
-//       render={({ location }) =>
-//         isAuthenticated ? (
-//           children
-//         ) : (
-//           <Redirect
-//             to={{
-//               pathname: "/login",
-//               state: { from: location },
-//             }}
-//           />
-//         )
-//       }
-//     />
-//   );
-// };
+function PrivateRoute({ isSignedIn, children }) {
+  if (!isSignedIn) {
+    return <Navigate to="/" replace />;
+  }
+  return children;
+}
 
 export default App;

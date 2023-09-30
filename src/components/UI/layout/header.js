@@ -1,19 +1,18 @@
 import { Box } from "@mui/material";
 import React from "react";
-import logo from "../../../asserts/images/logo.png";
+import logo from "../../../asserts/images/anime_logo.jpg";
 import { useNavigate } from "react-router-dom";
+import { GrFormSearch } from "react-icons/gr";
 
 const Header = ({ handleChange, searchInput }) => {
   const Navigate = useNavigate();
-  // const handleChange = (e) => {
-  //   const { value, name } = e.target;
-  // };
+
   return (
     <>
       <Box
         sx={{
           width: "100%",
-          height: "60px",
+          height: "70px",
           alignItems: "center",
           boxShadow: "0px 0.2px 2px",
           margin: "0 auto",
@@ -31,14 +30,7 @@ const Header = ({ handleChange, searchInput }) => {
             padding: " 0px 24px",
           }}
         >
-          <Box
-            component={"img"}
-            height={40}
-            width={70}
-            src={logo}
-            sx={{ borderRadius: "50%", marginTop: "12px" }}
-            alt="logo"
-          />
+          <Logo logo={logo} />
           <Box
             component={"div"}
             sx={{
@@ -46,23 +38,10 @@ const Header = ({ handleChange, searchInput }) => {
               justifyContent: "space-around",
               alignItems: "center",
               width: "300px",
+              position: "relative",
             }}
           >
-            <Box
-              component={"input"}
-              placeholder="search..."
-              onChange={handleChange}
-              name="search"
-              value={searchInput.value}
-              aria-label="search"
-              type="text"
-              sx={{
-                border: "1px solid gray",
-                paddingLeft: "12px ",
-                borderRadius: "12px",
-                width: "150px",
-              }}
-            />
+            <Search handleChange={handleChange} searchInput={searchInput} />
 
             <Box
               sx={{
@@ -82,5 +61,42 @@ const Header = ({ handleChange, searchInput }) => {
     </>
   );
 };
+function Logo({ logo }) {
+  return (
+    <Box
+      component={"img"}
+      height={60}
+      width={60}
+      src={logo}
+      sx={{ borderRadius: "50%", marginTop: "2px" }}
+      alt="logo"
+    />
+  );
+}
+function Search({ handleChange, searchInput }) {
+  return (
+    <>
+      <Box sx={{ position: "absolute" }}>
+        <GrFormSearch />
+      </Box>
+
+      <Box
+        component={"input"}
+        placeholder="search..."
+        onChange={handleChange}
+        name="search"
+        value={searchInput.value}
+        aria-label="search"
+        type="text"
+        sx={{
+          border: "1px solid gray",
+          paddingLeft: "12px ",
+          borderRadius: "12px",
+          width: "150px",
+        }}
+      />
+    </>
+  );
+}
 
 export default Header;
