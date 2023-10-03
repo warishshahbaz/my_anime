@@ -10,6 +10,7 @@ import {
 import * as paths from "./config/route-path";
 
 import Home from "./pages/home";
+import PageNotFound from "./components/UI/layout/pageNotFound";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
     </>

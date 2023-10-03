@@ -1,4 +1,4 @@
-import { InputAdornment, TextField } from "@mui/material";
+import { InputAdornment, TextField, useTheme } from "@mui/material";
 
 import { useState } from "react";
 import { FiMail } from "react-icons/fi";
@@ -8,14 +8,14 @@ import Validator from "../../utils/conversion/validator";
 
 function EmailInput(props) {
   const [valid, setValidity] = useState(true);
-  const [value, setValue] = useState("");
+
+  const theme = useTheme();
 
   function handleChange(e) {
     setValidity(true);
     const { value } = e.target;
     const isValid = new Validator(value).newEmail();
     setValidity(isValid);
-    setValue(value);
 
     if (props.onChange) {
       props.onChange(e, isValid);
@@ -54,7 +54,7 @@ function EmailInput(props) {
       }}
       sx={{
         ".MuiFormHelperText-root.Mui-error": {
-          color: "blue",
+          color: `${theme.palette.error.main}!important`,
         },
       }}
     />

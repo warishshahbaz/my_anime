@@ -1,12 +1,12 @@
 import {
   Box,
   Button,
-  Grid,
   IconButton,
   InputAdornment,
   TextField,
   Tooltip,
   Typography,
+  useTheme,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
@@ -36,7 +36,12 @@ export const Signup = () => {
     error: false,
     data: "",
   });
+  const [signUpStatus, setSignUpStatus] = useState({
+    error: false,
+    errMsg: "",
+  });
   const navigate = useNavigate();
+  const theme = useTheme();
 
   function checkIsValid(name, value) {
     if (name === "confirmPassword") {
@@ -79,16 +84,23 @@ export const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setData((pre) => {
-      return [...data, userCredentials];
-    });
-    navigate("/");
+    setData([...data, userCredentials]);
   };
 
   useEffect(() => {
     localStorage.setItem("signup", JSON.stringify(data));
+    let localData = JSON.parse(localStorage.getItem("signup"));
+    if (localData.length > 0) {
+      navigate("/");
+    } else {
+      setSignUpStatus({
+        error: true,
+        errMsg: "Registration failed ",
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
-  console.log(data, "data");
+
   return (
     <>
       <Box
@@ -127,7 +139,7 @@ export const Signup = () => {
           }}
         >
           <div>
-            {false && (
+            {signUpStatus.error && (
               <Box
                 component="div"
                 sx={{
@@ -137,7 +149,7 @@ export const Signup = () => {
                 }}
               >
                 <Typography variant="h5" sx={{ fontSize: "15px" }} color="red">
-                  {/* {sentOtpStatus.error} */}
+                  {signUpStatus.errMsg}
                 </Typography>
               </Box>
             )}
@@ -312,16 +324,15 @@ export const Signup = () => {
 
                 fontWeight: "500",
                 textAlign: "center",
-                color: "blue",
+                color: theme.palette.grey[500],
               }}
-              // href={partner_link}
             >
               Already have an account?
               <Box
                 component={"a"}
                 sx={{
                   marginLeft: "6px",
-                  color: "blue",
+                  color: theme.palette.primary.main,
                   cursor: "pointer",
                   fontWeight: 700,
                 }}

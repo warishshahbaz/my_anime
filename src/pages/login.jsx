@@ -1,4 +1,4 @@
-import { Alert, Box, Button, Typography } from "@mui/material";
+import { Alert, Box, Button, Typography, useTheme } from "@mui/material";
 import React, { useState } from "react";
 import EmailInput from "../components/signup/emailInput";
 import PasswordInput from "../components/signup/passwordInput";
@@ -12,20 +12,14 @@ const Login = () => {
     password: { value: "", error: null },
   });
   const [checkLocal, setCheckLocal] = useState(false);
-  const [isValid, setIsValid] = useState(true);
   const [loginStatus, setLoginStatus] = useState({
     error: false,
     errMsg: "",
   });
+  const theme = useTheme();
+
   const navigate = useNavigate();
-  function checkIsValid(name, value) {
-    if (name === "confirmPassword") {
-      setIsValid(false);
-      if (userCredentials.password.value === value) {
-        setIsValid(true);
-      }
-    }
-  }
+
   function checkValidation(type, value) {
     const validate = new Validator(value);
     if (type === "email") {
@@ -46,9 +40,6 @@ const Login = () => {
     const { value, name } = e.target;
 
     const validity = checkValidation(name, value);
-    if (name === "confirmPassword") {
-      checkIsValid(name, value);
-    }
 
     setUserCredentials((prevValue) => ({
       ...prevValue,
@@ -82,7 +73,7 @@ const Login = () => {
     }
     setTimeout(() => {
       setCheckLocal(false);
-    }, 3000);
+    }, 6000);
   };
   return (
     <>
@@ -101,7 +92,7 @@ const Login = () => {
             }}
           >
             <Alert onClose={() => setCheckLocal(false)} severity="error">
-              You need to ceate account
+              You need to create an account
             </Alert>
           </Box>
         </Box>
@@ -163,7 +154,7 @@ const Login = () => {
                 fontSize: "24px",
               }}
             >
-              Login In
+              Log In
             </Typography>
           </div>
 
@@ -225,7 +216,6 @@ const Login = () => {
                 fullWidth
                 type="submit"
                 onClick={handleSubmit}
-                // loading={sentOtpStatus.loading}
                 loadingText="Logging In..."
               >
                 Log In
@@ -240,7 +230,7 @@ const Login = () => {
 
                 fontWeight: "500",
                 textAlign: "center",
-                color: "blue",
+                color: theme.palette.grey[500],
               }}
             >
               Don’t have an account?
@@ -248,7 +238,7 @@ const Login = () => {
                 component={"a"}
                 sx={{
                   marginLeft: "6px",
-                  color: "blue",
+                  color: theme.palette.primary.main,
                   cursor: "pointer",
                   fontWeight: 700,
                 }}
