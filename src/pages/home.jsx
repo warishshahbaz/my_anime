@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import Header from "../components/UI/layout/header";
 import axios from "axios";
 import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
 import { Box, Pagination, Skeleton } from "@mui/material";
 import DetailAnime from "../components/home/detailAnime";
 import { ANIME_URL } from "../config/server";
