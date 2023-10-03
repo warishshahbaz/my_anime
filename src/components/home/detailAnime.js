@@ -3,7 +3,6 @@ import React, { useMemo } from "react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
 const DetailAnime = ({ data, setDetailToggle }) => {
-  console.log(data, "datahh");
   const result = useMemo(() => {
     return [
       {
@@ -52,6 +51,7 @@ const DetailAnime = ({ data, setDetailToggle }) => {
           display: "flex",
           justifyContent: "center",
           width: "100%",
+
           padding: "3px",
           "@media(max-width:450px)": {
             justifyContent: "center",
@@ -64,7 +64,7 @@ const DetailAnime = ({ data, setDetailToggle }) => {
             display: "flex",
             border: "1px solid gray",
             borderRadius: "5px",
-            "@media (max-width: 780px)": {
+            "@media (max-width: 450px)": {
               flexDirection: "column",
             },
           }}
@@ -73,7 +73,7 @@ const DetailAnime = ({ data, setDetailToggle }) => {
             sx={{
               width: "50%",
               height: "300px",
-              "@media (max-width: 780px)": {
+              "@media (max-width: 450px)": {
                 width: "100%",
               },
             }}

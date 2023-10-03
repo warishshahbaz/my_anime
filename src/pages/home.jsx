@@ -116,6 +116,7 @@ const Home = () => {
               justifyContent: "center",
               flexWrap: "wrap",
               padding: "12px",
+              marginTop: "12px",
               gap: 3,
               "@media(min-width:1550px)": {
                 width: "90%",
@@ -164,6 +165,9 @@ function AnimeSkelaton() {
           flexWrap: "wrap",
           padding: "12px",
           gap: 3,
+          "@media(min-width:1550px)": {
+            width: "90%",
+          },
         }}
       >
         {new Array(8).fill().map((val) => (
@@ -189,6 +193,10 @@ function AnimeCard({ anime, handleToDetail }) {
           boxShadow:
             "0 13px 40px -5px hsla(240, 30.1%, 28%, 0.12), 0 8px 32px -8px hsla(0, 0%, 0%, 0.14), 0 -6px 32px -6px hsla(0, 0%, 0%, 0.02)",
         },
+        "@media(min-width: 1300px)": {
+          width: 300,
+          height: 300,
+        },
       }}
       onClick={() => handleToDetail(anime)}
     >
@@ -208,6 +216,10 @@ function AnimeCard({ anime, handleToDetail }) {
           width: "280px",
           backgroundColor: "rgb(198, 158, 158)",
           objectFit: "cover",
+          "@media(min-width: 1300px)": {
+            width: "100%",
+            height: 200,
+          },
         }}
         src={anime.images.jpg.image_url}
       />
