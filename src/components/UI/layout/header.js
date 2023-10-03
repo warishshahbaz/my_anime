@@ -16,6 +16,10 @@ const Header = ({ handleChange, searchInput }) => {
           alignItems: "center",
           boxShadow: "0px 0.2px 2px",
           margin: "0 auto",
+          // position: "sticky",
+          // top: "0px",
+          // left: "0px",
+          // zIndex: 999,
           "@media (max-width:400px)": {
             boxShadow: "0px 0.4px 2px",
           },

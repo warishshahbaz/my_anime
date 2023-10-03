@@ -180,7 +180,7 @@ function AnimeCard({ anime, handleToDetail }) {
     <Card
       sx={{
         width: 250,
-        height: 300,
+        height: 250,
         maxWidth: 345,
         boxShadow:
           "0 13px 27px -5px hsla(240, 30.1%, 28%, 0.25), 0 8px 16px -8px hsla(0, 0%, 0%, 0.3), 0 -6px 16px -6px hsla(0, 0%, 0%, 0.03)",
@@ -193,21 +193,20 @@ function AnimeCard({ anime, handleToDetail }) {
       }}
       onClick={() => handleToDetail(anime)}
     >
-      <CardHeader
-        title={
-          <Box component={"p"} sx={{ fontSize: "15px" }}>
-            {anime.title.length > 20
-              ? `${anime.title.slice(0, 20)}...`
-              : anime.title}
-          </Box>
-        }
-        subheader="September 14, 2016"
-      />
+      <Box
+        component={"p"}
+        sx={{ fontSize: "15px", padding: " 5px 10px", fontWeight: "500" }}
+      >
+        {anime.title.length > 20
+          ? `${anime.title.slice(0, 20)}...`
+          : anime.title}
+      </Box>
+
       <Box
         component={"img"}
         sx={{
           height: "150px",
-          width: "250px",
+          width: "280px",
           backgroundColor: "rgb(198, 158, 158)",
           objectFit: "cover",
         }}
