@@ -56,6 +56,9 @@ const Home = () => {
     return paginationData.data.filter((item) =>
       item.title.toLowerCase().includes(searchInput.value.toLowerCase())
     );
+    // return paginationData.data.find((item) =>
+    //   item.title.toLowerCase().includes(searchInput.value.toLowerCase())
+    // );
   }, [paginationData.data, searchInput.value]);
 
   const handlePagination = (e, value) => {
@@ -72,10 +75,6 @@ const Home = () => {
 
   useEffect(() => {
     document.title = "Anime App";
-    fetchPaginationData(1);
-  }, []);
-
-  useEffect(() => {
     fetchPaginationData(page);
   }, [page]);
 
