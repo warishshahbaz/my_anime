@@ -69,6 +69,7 @@ const Home = () => {
       value: value,
     });
   };
+
   useEffect(() => {
     document.title = "Anime App";
     fetchPaginationData(1);
