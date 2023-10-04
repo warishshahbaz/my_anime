@@ -46,6 +46,7 @@ const DetailAnime = ({ data, setDetailToggle }) => {
           />
         </Tooltip>
       </Box>
+
       <Box
         sx={{
           display: "flex",

@@ -85,6 +85,13 @@ export const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setData([...data, userCredentials]);
+    let localData = JSON.parse(localStorage.getItem("signup"));
+    if (!localData.length > 0) {
+      setSignUpStatus({
+        error: true,
+        errMsg: "Registration failed ",
+      });
+    }
   };
 
   useEffect(() => {
@@ -92,12 +99,8 @@ export const Signup = () => {
     let localData = JSON.parse(localStorage.getItem("signup"));
     if (localData.length > 0) {
       navigate("/");
-    } else {
-      setSignUpStatus({
-        error: true,
-        errMsg: "Registration failed ",
-      });
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 

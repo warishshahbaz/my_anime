@@ -14,6 +14,10 @@ const Header = ({ handleChange, searchInput }) => {
           width: "100%",
           height: "70px",
           alignItems: "center",
+          position: "sticky",
+          top: "0px",
+          left: "0px",
+          backgroundColor: "white",
           boxShadow:
             "0 13px 25px -2px hsla(240, 30.1%, 28%, 0.25), 0 8px 16px -8px hsla(0, 0%, 0%, 0.3), 0 -6px 16px -6px hsla(0, 0%, 0%, 0.03)",
           transition: "all ease 200ms",
