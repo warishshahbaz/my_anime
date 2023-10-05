@@ -3,8 +3,9 @@ import React from "react";
 import logo from "../../../asserts/images/anime_logo.jpg";
 import { useNavigate } from "react-router-dom";
 import { GrFormSearch } from "react-icons/gr";
+import AlignItemsList from "../../listOfSearch";
 
-const Header = ({ handleChange, searchInput }) => {
+const Header = ({ handleChange, searchInput, searchData, handleToDetail }) => {
   const Navigate = useNavigate();
 
   return (
@@ -33,7 +34,6 @@ const Header = ({ handleChange, searchInput }) => {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-
             padding: " 0px 24px",
           }}
         >
@@ -48,7 +48,20 @@ const Header = ({ handleChange, searchInput }) => {
               position: "relative",
             }}
           >
-            <Search handleChange={handleChange} searchInput={searchInput} />
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                position: "relative",
+              }}
+            >
+              <Search handleChange={handleChange} searchInput={searchInput} />
+              <AlignItemsList
+                searchData={searchData}
+                handleToDetail={handleToDetail}
+                searchInput={searchInput}
+              />
+            </Box>
 
             <Box
               sx={{
@@ -83,7 +96,7 @@ function Logo({ logo }) {
 function Search({ handleChange, searchInput }) {
   return (
     <>
-      <Box sx={{ position: "absolute" }}>
+      <Box sx={{ position: "absolute", top: "6px", left: "126px" }}>
         <GrFormSearch />
       </Box>
 

@@ -8,6 +8,8 @@ import {
   Navigate,
 } from "react-router-dom";
 import * as paths from "./config/route-path";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Home from "./pages/home";
 import PageNotFound from "./components/UI/layout/pageNotFound";
@@ -31,6 +33,11 @@ function App() {
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
+      <ToastContainer
+        style={{ fontSize: "0.8rem" }}
+        position="bottom-right"
+        theme="colored"
+      />
     </>
   );
 }

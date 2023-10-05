@@ -5,6 +5,7 @@ import PasswordInput from "../components/signup/passwordInput";
 import { HelperText } from "../components/signup/HelperText";
 import Validator from "../utils/conversion/validator";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [userCredentials, setUserCredentials] = useState({
@@ -16,6 +17,7 @@ const Login = () => {
     error: false,
     errMsg: "",
   });
+  const [loading, setLoading] = useState(false);
   const theme = useTheme();
 
   const navigate = useNavigate();
@@ -49,10 +51,12 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     let data = JSON.parse(localStorage.getItem("signup"));
 
     if (!data.length > 0) {
       setCheckLocal(true);
+      setLoading(false);
     } else {
       setCheckLocal(false);
       const { email, password } = userCredentials;
@@ -63,12 +67,16 @@ const Login = () => {
           val.password.value === password.value
       );
       if (res) {
+        toast.success("login successfully");
+        setLoading(false);
+
         navigate("/home");
       } else {
         setLoginStatus({
           errMsg: "Login credential does not match",
           error: true,
         });
+        setLoading(false);
       }
     }
     setTimeout(() => {
@@ -214,6 +222,7 @@ const Login = () => {
                   !userCredentials.password.value
                 }
                 fullWidth
+                loading={loading}
                 type="submit"
                 onClick={handleSubmit}
                 loadingText="Logging In..."

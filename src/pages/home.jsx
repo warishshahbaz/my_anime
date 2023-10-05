@@ -4,8 +4,9 @@ import axios from "axios";
 import Card from "@mui/material/Card";
 import { Box, Pagination, Skeleton } from "@mui/material";
 import DetailAnime from "../components/home/detailAnime";
-import { PAGINATION } from "../config/server";
+import { ANIME_URL, PAGINATION } from "../config/server";
 import NoDataFound from "../components/UI/layout/NoData";
+import Error from "../components/UI/layout/error";
 
 const Home = () => {
   const [detailToggle, setDetailToggle] = useState(false);
@@ -22,6 +23,11 @@ const Home = () => {
   const [searchInput, setSearchInput] = useState({
     name: "",
     value: "",
+  });
+  const [searchData, setSearchData] = useState({
+    loading: false,
+    data: [],
+    error: false,
   });
 
   async function fetchPaginationData(page) {
@@ -52,27 +58,61 @@ const Home = () => {
     }
   }
   // filter data according to search
-  let filterData = useMemo(() => {
-    return paginationData.data.filter((item) =>
-      item.title.toLowerCase().includes(searchInput.value.toLowerCase())
-    );
-    // return paginationData.data.find((item) =>
-    //   item.title.toLowerCase().includes(searchInput.value.toLowerCase())
-    // );
-  }, [paginationData.data, searchInput.value]);
+  // let filterData = useMemo(() => {
+  //   return paginationData.data.filter((item) =>
+  //     item.title.toLowerCase().includes(searchInput.value.toLowerCase())
+  //   );
+  // }, [paginationData.data, searchInput.value]);
 
   const handlePagination = (e, value) => {
     setPage(value);
   };
 
+  async function fetchSearchData(value, page) {
+    setSearchData((pre) => {
+      return {
+        ...pre,
+        loading: true,
+      };
+    });
+    try {
+      let res = await axios.get(PAGINATION(page));
+
+      let result = res.data.data.filter((val, i) => {
+        return (
+          value &&
+          val &&
+          val.title &&
+          val.title.toLowerCase().includes(value.toLowerCase())
+        );
+      });
+      setSearchData((pre) => {
+        return {
+          ...pre,
+          loading: false,
+          data: result,
+        };
+      });
+    } catch (error) {
+      setSearchData((pre) => {
+        return {
+          ...pre,
+          loading: false,
+          error: true,
+        };
+      });
+    }
+  }
+  // search input data
   const searchHandle = (e) => {
     const { value, name } = e.target;
+
+    fetchSearchData(value, page);
     setSearchInput({
       name: name,
       value: value,
     });
   };
-
   useEffect(() => {
     document.title = "Anime App";
     fetchPaginationData(page);
@@ -83,11 +123,14 @@ const Home = () => {
     setDetailAnimeData(anime);
   };
 
-  const firstIndex = paginationData.page * paginationData.per_page;
-  const lastIndex = firstIndex + paginationData.per_page;
   return (
     <>
-      <Header handleChange={searchHandle} searchInput={searchInput} />
+      <Header
+        handleChange={searchHandle}
+        searchInput={searchInput}
+        searchData={searchData}
+        handleToDetail={handleToDetail}
+      />
       {detailToggle ? (
         <Box
           component={"div"}
@@ -104,6 +147,8 @@ const Home = () => {
             setDetailToggle={setDetailToggle}
           />
         </Box>
+      ) : paginationData.error ? (
+        <Error text={"Network Error"} />
       ) : !paginationData.loading ? (
         <Box
           sx={{
@@ -127,10 +172,10 @@ const Home = () => {
               },
             }}
           >
-            {!filterData.slice(firstIndex, lastIndex) > 0 ? (
+            {!paginationData.data > 0 ? (
               <NoDataFound />
             ) : (
-              filterData.map((anime) => {
+              paginationData.data.map((anime) => {
                 return (
                   <AnimeCard anime={anime} handleToDetail={handleToDetail} />
                 );
@@ -202,7 +247,7 @@ function AnimeCard({ anime, handleToDetail }) {
         transition: "all ease 200ms",
         ":hover": {
           transform: "scale(1.03)",
-          zIndex: 99999,
+          zIndex: 9999999,
           boxShadow:
             "0 13px 40px -5px hsla(240, 30.1%, 28%, 0.12), 0 8px 32px -8px hsla(0, 0%, 0%, 0.14), 0 -6px 32px -6px hsla(0, 0%, 0%, 0.02)",
         },
