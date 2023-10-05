@@ -6,8 +6,12 @@ import { GrFormSearch } from "react-icons/gr";
 import AlignItemsList from "../../listOfSearch";
 
 const Header = ({ handleChange, searchInput, searchData, handleToDetail }) => {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
 
+  function logout() {
+    localStorage.setItem("login", false);
+    navigate("/");
+  }
   return (
     <>
       <Box
@@ -72,7 +76,7 @@ const Header = ({ handleChange, searchInput, searchData, handleToDetail }) => {
                   fontWeight: "500",
                 },
               }}
-              onClick={() => Navigate("/")}
+              onClick={logout}
             >
               Log out
             </Box>

@@ -68,10 +68,12 @@ const Login = () => {
       );
       if (res) {
         toast.success("login successfully");
-        setLoading(false);
 
+        setLoading(false);
         navigate("/home");
+        localStorage.setItem("login", true);
       } else {
+        localStorage.setItem("login", false);
         setLoginStatus({
           errMsg: "Login credential does not match",
           error: true,
@@ -83,6 +85,7 @@ const Login = () => {
       setCheckLocal(false);
     }, 6000);
   };
+
   return (
     <>
       {checkLocal && (

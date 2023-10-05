@@ -15,6 +15,8 @@ import Home from "./pages/home";
 import PageNotFound from "./components/UI/layout/pageNotFound";
 
 function App() {
+  const isLogin = JSON.parse(localStorage.getItem("login"));
+  console.log(isLogin, "isLogin");
   return (
     <>
       <Router>
@@ -25,7 +27,7 @@ function App() {
             path={"/home"}
             index
             element={
-              <PrivateRoute isSignedIn={true}>
+              <PrivateRoute isSignedIn={isLogin}>
                 <Home />
               </PrivateRoute>
             }
