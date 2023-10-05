@@ -1,10 +1,8 @@
 import {
   Box,
   Button,
-  IconButton,
   InputAdornment,
   TextField,
-  Tooltip,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -16,9 +14,6 @@ import ConfirmPasswordInput from "../components/signup/confirmPass";
 import Validator from "../utils/conversion/validator";
 import { BsTelephone } from "react-icons/bs";
 import { HelperText } from "../components/signup/HelperText";
-import { AiOutlineCheckCircle } from "react-icons/ai";
-import { RiRefreshLine } from "react-icons/ri";
-import { BiError } from "react-icons/bi";
 import EmailInput from "../components/signup/emailInput";
 import { useNavigate } from "react-router-dom";
 
@@ -31,11 +26,6 @@ export const Signup = () => {
   });
   const [data, setData] = useState([]);
   const [isValid, setIsValid] = useState(true);
-  const [phoneVerified, setPhoneVerified] = useState({
-    loading: false,
-    error: false,
-    data: "",
-  });
   const [signUpStatus, setSignUpStatus] = useState({
     error: false,
     errMsg: "",
@@ -258,26 +248,6 @@ export const Signup = () => {
                   startAdornment: (
                     <InputAdornment position="start">
                       <BsTelephone />
-                    </InputAdornment>
-                  ),
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        edge="end"
-                      >
-                        {phoneVerified.loading && <RiRefreshLine />}
-                        {phoneVerified.error && (
-                          <Tooltip title={phoneVerified.error}>
-                            <Box component="span">
-                              <BiError color="red" />
-                            </Box>
-                          </Tooltip>
-                        )}
-                        {phoneVerified.data && !phoneVerified.loading && (
-                          <AiOutlineCheckCircle color="green" />
-                        )}
-                      </IconButton>
                     </InputAdornment>
                   ),
                 }}
