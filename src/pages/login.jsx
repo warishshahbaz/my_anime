@@ -67,11 +67,11 @@ const Login = () => {
           val.password.value === password.value
       );
       if (res) {
-        toast.success("login successfully");
-
         setLoading(false);
-        navigate("/home");
+
         localStorage.setItem("login", true);
+        navigate("/home");
+        toast.success("login successfully");
       } else {
         localStorage.setItem("login", false);
         setLoginStatus({
