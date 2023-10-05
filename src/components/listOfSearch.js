@@ -6,7 +6,6 @@ const styles = {
   width: "100%",
   maxWidth: 350,
   bgcolor: "background.paper",
-  // zIndex: 99999,
   display: "flex",
   borderBottom: "1px solid gray",
   cursor: "pointer",

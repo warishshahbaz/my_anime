@@ -54,7 +54,7 @@ const Login = () => {
     setLoading(true);
     let data = JSON.parse(localStorage.getItem("signup"));
 
-    if (!data.length > 0) {
+    if (!data?.length > 0) {
       setCheckLocal(true);
       setLoading(false);
     } else {
