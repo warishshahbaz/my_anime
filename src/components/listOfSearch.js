@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Box } from "@mui/material";
 import Error from "./UI/layout/error";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const styles = {
   width: "100%",
@@ -39,6 +40,19 @@ export default function AlignItemsList({
     >
       {searchData.error ? (
         <Error text="Network error" />
+      ) : searchData.loading ? (
+        <Box
+          sx={{
+            bgcolor: "background.paper",
+            display: "flex",
+            width: "100%",
+            height: "100px",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress />
+        </Box>
       ) : searchData.data.length > 0 ? (
         searchData.data.map((val) => {
           return (

@@ -34,6 +34,7 @@ const Home = () => {
     setPaginationData((prev) => {
       return {
         ...prev,
+        error: false,
         loading: true,
       };
     });
@@ -57,12 +58,6 @@ const Home = () => {
       });
     }
   }
-  // filter data according to search
-  // let filterData = useMemo(() => {
-  //   return paginationData.data.filter((item) =>
-  //     item.title.toLowerCase().includes(searchInput.value.toLowerCase())
-  //   );
-  // }, [paginationData.data, searchInput.value]);
 
   const handlePagination = (e, value) => {
     setPage(value);
@@ -117,7 +112,7 @@ const Home = () => {
   useEffect(() => {
     let timer = setTimeout(() => {
       fetchSearchData(searchInput.value, page);
-    }, 1500);
+    }, 1000);
     return () => clearTimeout(timer);
   }, [searchInput.value, page]);
 
@@ -181,7 +176,7 @@ const Home = () => {
               },
             }}
           >
-            {!paginationData.data > 0 ? (
+            {!paginationData.data.length > 0 ? (
               <NoDataFound />
             ) : (
               paginationData.data.map((anime) => {
