@@ -3,9 +3,16 @@ import React from "react";
 import logo from "../../../asserts/images/anime_logo.jpg";
 import { useNavigate } from "react-router-dom";
 import { GrFormSearch } from "react-icons/gr";
+import { RxCross2 } from "react-icons/rx";
 import AlignItemsList from "../../listOfSearch";
 
-const Header = ({ handleChange, searchInput, searchData, handleToDetail }) => {
+const Header = ({
+  handleChange,
+  searchInput,
+  searchData,
+  handleToDetail,
+  setSearchInput,
+}) => {
   const navigate = useNavigate();
 
   function logout() {
@@ -60,7 +67,11 @@ const Header = ({ handleChange, searchInput, searchData, handleToDetail }) => {
                 position: "relative",
               }}
             >
-              <Search handleChange={handleChange} searchInput={searchInput} />
+              <Search
+                handleChange={handleChange}
+                searchInput={searchInput}
+                setSearchInput={setSearchInput}
+              />
               <AlignItemsList
                 searchData={searchData}
                 handleToDetail={handleToDetail}
@@ -98,11 +109,26 @@ function Logo({ logo }) {
     />
   );
 }
-function Search({ handleChange, searchInput }) {
+function Search({ handleChange, searchInput, setSearchInput }) {
   return (
     <>
       <Box sx={{ position: "absolute", top: "6px", left: "126px" }}>
-        <GrFormSearch />
+        {searchInput.value ? (
+          <Box
+            component={"span"}
+            sx={{ cursor: "pointer" }}
+            onClick={() =>
+              setSearchInput({
+                name: "",
+                value: "",
+              })
+            }
+          >
+            <RxCross2 />
+          </Box>
+        ) : (
+          <GrFormSearch />
+        )}
       </Box>
 
       <Box
@@ -110,6 +136,8 @@ function Search({ handleChange, searchInput }) {
         placeholder="search..."
         onChange={handleChange}
         name="search"
+        autoComplete={false}
+        autoFocus={false}
         value={searchInput.value}
         aria-label="search"
         type="text"

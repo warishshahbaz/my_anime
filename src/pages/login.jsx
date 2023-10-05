@@ -68,7 +68,6 @@ const Login = () => {
       );
       if (res) {
         setLoading(false);
-
         localStorage.setItem("login", true);
         navigate("/home");
         toast.success("login successfully");

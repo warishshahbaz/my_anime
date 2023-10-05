@@ -73,12 +73,13 @@ const Home = () => {
       return {
         ...pre,
         loading: true,
+        error: false,
       };
     });
     try {
       let res = await axios.get(PAGINATION(page));
 
-      let result = res.data.data.filter((val, i) => {
+      let result = res.data.data.filter((val) => {
         return (
           value &&
           val &&
@@ -107,12 +108,19 @@ const Home = () => {
   const searchHandle = (e) => {
     const { value, name } = e.target;
 
-    fetchSearchData(value, page);
     setSearchInput({
       name: name,
       value: value,
     });
   };
+  // Debouncing
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      fetchSearchData(searchInput.value, page);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, [searchInput.value, page]);
+
   useEffect(() => {
     document.title = "Anime App";
     fetchPaginationData(page);
@@ -130,6 +138,7 @@ const Home = () => {
         searchInput={searchInput}
         searchData={searchData}
         handleToDetail={handleToDetail}
+        setSearchInput={setSearchInput}
       />
       {detailToggle ? (
         <Box
