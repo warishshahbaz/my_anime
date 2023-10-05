@@ -1,5 +1,5 @@
 import { Alert, Box, Button, Typography, useTheme } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import EmailInput from "../components/signup/emailInput";
 import PasswordInput from "../components/signup/passwordInput";
 import { HelperText } from "../components/signup/HelperText";
@@ -7,7 +7,7 @@ import Validator from "../utils/conversion/validator";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const Login = () => {
+const Login = ({ setIsLogin }) => {
   const [userCredentials, setUserCredentials] = useState({
     email: { value: "", error: null },
     password: { value: "", error: null },
@@ -66,13 +66,15 @@ const Login = () => {
           val.email.value === email.value &&
           val.password.value === password.value
       );
+
       if (res) {
         setLoading(false);
-        localStorage.setItem("login", true);
+        setIsLogin(localStorage.setItem("login", true));
+
         navigate("/home");
         toast.success("login successfully");
       } else {
-        localStorage.setItem("login", false);
+        setIsLogin(localStorage.setItem("login", false));
         setLoginStatus({
           errMsg: "Login credential does not match",
           error: true,

@@ -13,21 +13,28 @@ import "react-toastify/dist/ReactToastify.css";
 
 import Home from "./pages/home";
 import PageNotFound from "./components/UI/layout/pageNotFound";
+import { useState } from "react";
 
 function App() {
-  const isLogin = JSON.parse(localStorage.getItem("login"));
+  // const isLogin = JSON.parse(localStorage.getItem("login"));
+  const [isLogin, setIsLogin] = useState(false);
+
   console.log(isLogin, "isLogin");
   return (
     <>
       <Router>
         <Routes>
           <Route path={paths.SIGNUP} element={<Signup />} />
-          <Route path={paths.LOGIN} index element={<Login />} />
+          <Route
+            path={paths.LOGIN}
+            index
+            element={<Login setIsLogin={setIsLogin} />}
+          />
           <Route
             path={"/home"}
             index
             element={
-              <PrivateRoute isSignedIn={isLogin}>
+              <PrivateRoute isSignedIn={true}>
                 <Home />
               </PrivateRoute>
             }
