@@ -114,7 +114,8 @@ const Home = () => {
       fetchSearchData(searchInput.value, page);
     }, 1000);
     return () => clearTimeout(timer);
-  }, [searchInput.value, page]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchInput.value]);
 
   useEffect(() => {
     document.title = "Anime App";
@@ -140,7 +141,7 @@ const Home = () => {
           component={"div"}
           sx={{
             width: "100%",
-            height: "100vh",
+            height: "80vh",
             display: "flex",
             justifyItems: "center",
             alignItems: "center",
