@@ -7,11 +7,10 @@ import {
   useTheme,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-
 import PasswordInput from "../components/signup/passwordInput";
 import { red } from "@mui/material/colors";
 import ConfirmPasswordInput from "../components/signup/confirmPass";
-import Validator from "../utils/conversion/validator";
+import Validator from "../utils/validator";
 import { BsTelephone } from "react-icons/bs";
 import { HelperText } from "../components/signup/HelperText";
 import EmailInput from "../components/signup/emailInput";

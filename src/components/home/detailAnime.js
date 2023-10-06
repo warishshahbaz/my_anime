@@ -89,11 +89,12 @@ const DetailAnime = ({ data, setDetailToggle }) => {
               },
             }}
           >
-            {result.map((item) => {
+            {result.map((item, i) => {
               return (
                 <>
                   {item.title === "Trailer" ? (
                     <Box
+                      key={`${i}-${item.title}`}
                       sx={{
                         width: "100%",
                         display: "flex",

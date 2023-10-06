@@ -1,9 +1,9 @@
 import { Alert, Box, Button, Typography, useTheme } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import EmailInput from "../components/signup/emailInput";
 import PasswordInput from "../components/signup/passwordInput";
 import { HelperText } from "../components/signup/HelperText";
-import Validator from "../utils/conversion/validator";
+import Validator from "../utils/validator";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -49,7 +49,7 @@ const Login = ({ setIsLogin }) => {
     }));
   }
 
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
     let data = JSON.parse(localStorage.getItem("signup"));
@@ -85,7 +85,7 @@ const Login = ({ setIsLogin }) => {
     setTimeout(() => {
       setCheckLocal(false);
     }, 6000);
-  };
+  }
 
   return (
     <>

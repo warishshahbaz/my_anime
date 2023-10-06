@@ -1,25 +1,20 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/UI/layout/header";
 import axios from "axios";
 import Card from "@mui/material/Card";
 import { Box, Pagination, Skeleton } from "@mui/material";
 import DetailAnime from "../components/home/detailAnime";
-import { ANIME_URL, PAGINATION } from "../config/server";
-import NoDataFound from "../components/UI/layout/NoData";
+import { SEARCH_URL } from "../config/server";
+import NoDataFound from "../components/UI/layout/noData";
 import Error from "../components/UI/layout/error";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPaginationData } from "../store/slices/searchSlice";
 
 const Home = () => {
   const [detailToggle, setDetailToggle] = useState(false);
   const [detailAnimeData, setDetailAnimeData] = useState({});
   const [page, setPage] = useState(1);
-  const [paginationData, setPaginationData] = useState({
-    loading: false,
-    error: false,
-    page: 0,
-    data: [],
-    per_page: 0,
-    total: 0,
-  });
+
   const [searchInput, setSearchInput] = useState({
     name: "",
     value: "",
@@ -30,40 +25,14 @@ const Home = () => {
     error: false,
   });
 
-  async function fetchPaginationData(page) {
-    setPaginationData((prev) => {
-      return {
-        ...prev,
-        error: false,
-        loading: true,
-      };
-    });
-    try {
-      let res = await axios.get(PAGINATION(page));
-      const { total, per_page } = res.data.pagination.items;
-      setPaginationData({
-        page: res.data.pagination.current_page,
-        data: res.data.data,
-        per_page: per_page,
-        total: total,
-        loading: false,
-      });
-    } catch (error) {
-      setPaginationData((prev) => {
-        return {
-          ...prev,
-          loading: false,
-          error: true,
-        };
-      });
-    }
+  const paginationData = useSelector((state) => state.searchData.searchData);
+  const dispatch = useDispatch();
+
+  function handlePagination(e, value) {
+    setPage(value);
   }
 
-  const handlePagination = (e, value) => {
-    setPage(value);
-  };
-
-  async function fetchSearchData(value, page) {
+  async function fetchSearchData(value) {
     setSearchData((pre) => {
       return {
         ...pre,
@@ -72,8 +41,7 @@ const Home = () => {
       };
     });
     try {
-      let res = await axios.get(PAGINATION(page));
-
+      let res = await axios.get(SEARCH_URL(value));
       let result = res.data.data.filter((val) => {
         return (
           value &&
@@ -99,33 +67,45 @@ const Home = () => {
       });
     }
   }
+  function handleToDetail(anime) {
+    setDetailToggle(true);
+    setDetailAnimeData(anime);
+  }
   // search input data
-  const searchHandle = (e) => {
+  function searchHandle(e) {
     const { value, name } = e.target;
 
     setSearchInput({
       name: name,
-      value: value,
+      value: value.trim(),
     });
-  };
+  }
+
   // Debouncing
   useEffect(() => {
-    let timer = setTimeout(() => {
-      fetchSearchData(searchInput.value, page);
-    }, 1000);
+    let timer;
+    if (!searchInput.value.length > 0) {
+      setSearchData((pre) => {
+        return {
+          ...pre,
+          data: [],
+        };
+      });
+    }
+    if (searchInput.value.length > 0) {
+      timer = setTimeout(() => {
+        fetchSearchData(searchInput.value);
+      }, 1000);
+    }
+
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchInput.value]);
 
   useEffect(() => {
     document.title = "Anime App";
-    fetchPaginationData(page);
-  }, [page]);
-
-  const handleToDetail = (anime) => {
-    setDetailToggle(true);
-    setDetailAnimeData(anime);
-  };
+    dispatch(fetchPaginationData(page));
+  }, [page, dispatch]);
 
   return (
     <>
@@ -180,9 +160,13 @@ const Home = () => {
             {!paginationData.data.length > 0 ? (
               <NoDataFound />
             ) : (
-              paginationData.data.map((anime) => {
+              paginationData.data.map((anime, i) => {
                 return (
-                  <AnimeCard anime={anime} handleToDetail={handleToDetail} />
+                  <AnimeCard
+                    key={`${i}-${anime.title}`}
+                    anime={anime}
+                    handleToDetail={handleToDetail}
+                  />
                 );
               })
             )}

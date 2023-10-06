@@ -4,7 +4,7 @@ import { useState } from "react";
 import { FiMail } from "react-icons/fi";
 
 import { HelperText } from "./HelperText";
-import Validator from "../../utils/conversion/validator";
+import Validator from "../../utils/validator";
 
 function EmailInput(props) {
   const [valid, setValidity] = useState(true);

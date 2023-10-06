@@ -14,34 +14,37 @@ import "react-toastify/dist/ReactToastify.css";
 import Home from "./pages/home";
 import PageNotFound from "./components/UI/layout/pageNotFound";
 import { useState } from "react";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
 
 function App() {
-  // const isLogin = JSON.parse(localStorage.getItem("login"));
   const [isLogin, setIsLogin] = useState(false);
 
-  console.log(isLogin, "isLogin");
   return (
     <>
-      <Router>
-        <Routes>
-          <Route path={paths.SIGNUP} element={<Signup />} />
-          <Route
-            path={paths.LOGIN}
-            index
-            element={<Login setIsLogin={setIsLogin} />}
-          />
-          <Route
-            path={"/home"}
-            index
-            element={
-              <PrivateRoute isSignedIn={true}>
-                <Home />
-              </PrivateRoute>
-            }
-          />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </Router>
+      <Provider store={store}>
+        <Router>
+          <Routes>
+            <Route path={paths.SIGNUP} element={<Signup />} />
+            <Route
+              path={paths.LOGIN}
+              index
+              element={<Login setIsLogin={setIsLogin} />}
+            />
+            <Route
+              path={"/home"}
+              index
+              element={
+                <PrivateRoute isSignedIn={true}>
+                  <Home />
+                </PrivateRoute>
+              }
+            />
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+        </Router>
+      </Provider>
+
       <ToastContainer
         style={{ fontSize: "0.8rem" }}
         position="bottom-right"
