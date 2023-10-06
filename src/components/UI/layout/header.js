@@ -1,10 +1,11 @@
-import { Box } from "@mui/material";
+import { Box, InputAdornment, TextField } from "@mui/material";
 import React from "react";
 import logo from "../../../asserts/images/anime_logo.jpg";
 import { useNavigate } from "react-router-dom";
 import { GrFormSearch } from "react-icons/gr";
 import { RxCross2 } from "react-icons/rx";
 import AlignItemsList from "../../listOfSearch";
+import SearchAnime from "../../search/search";
 
 const Header = ({
   handleChange,
@@ -72,6 +73,7 @@ const Header = ({
                 searchInput={searchInput}
                 setSearchInput={setSearchInput}
               />
+
               <AlignItemsList
                 searchData={searchData}
                 handleToDetail={handleToDetail}
@@ -112,26 +114,46 @@ function Logo({ logo }) {
 function Search({ handleChange, searchInput, setSearchInput }) {
   return (
     <>
-      <Box sx={{ position: "absolute", top: "6px", left: "126px" }}>
-        {searchInput.value ? (
-          <Box
-            component={"span"}
-            sx={{ cursor: "pointer" }}
-            onClick={() =>
-              setSearchInput({
-                name: "",
-                value: "",
-              })
-            }
-          >
-            <RxCross2 />
-          </Box>
-        ) : (
-          <GrFormSearch />
-        )}
-      </Box>
+      <Box sx={{ position: "absolute", top: "6px", left: "126px" }}></Box>
+      <TextField
+        placeholder="search..."
+        onChange={handleChange}
+        variant="standard"
+        name="search"
+        autoComplete={false}
+        autoFocus={false}
+        value={searchInput.value}
+        aria-label="search"
+        type="text"
+        sx={{
+          paddingLeft: "12px ",
+          width: "150px",
+        }}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              {searchInput.value ? (
+                <Box
+                  component={"span"}
+                  sx={{ cursor: "pointer" }}
+                  onClick={() =>
+                    setSearchInput({
+                      name: "",
+                      value: "",
+                    })
+                  }
+                >
+                  <RxCross2 />
+                </Box>
+              ) : (
+                <GrFormSearch />
+              )}
+            </InputAdornment>
+          ),
+        }}
+      />
 
-      <Box
+      {/* <Box
         component={"input"}
         placeholder="search..."
         onChange={handleChange}
@@ -147,7 +169,7 @@ function Search({ handleChange, searchInput, setSearchInput }) {
           borderRadius: "12px",
           width: "150px",
         }}
-      />
+      /> */}
     </>
   );
 }
