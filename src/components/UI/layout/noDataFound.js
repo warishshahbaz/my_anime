@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import React from "react";
 import { LiaInboxSolid } from "react-icons/lia";
 
-function NoDataFound() {
+function NoData() {
   return (
     <>
       <Box
@@ -27,4 +27,4 @@ function NoDataFound() {
   );
 }
 
-export default NoDataFound;
+export default NoData;

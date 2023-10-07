@@ -5,7 +5,7 @@ import Card from "@mui/material/Card";
 import { Box, Pagination, Skeleton } from "@mui/material";
 import DetailAnime from "../components/home/detailAnime";
 import { SEARCH_URL } from "../config/server";
-import NoDataFound from "../components/UI/layout/noData";
+import NoData from "../components/UI/layout/noDataFound";
 import Error from "../components/UI/layout/error";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPaginationData } from "../store/slices/searchSlice";
@@ -158,7 +158,7 @@ const Home = () => {
             }}
           >
             {!paginationData.data.length > 0 ? (
-              <NoDataFound />
+              <NoData />
             ) : (
               paginationData.data.map((anime, i) => {
                 return (
